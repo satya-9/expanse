@@ -1,0 +1,26 @@
+.nasaImage{
+    width:10%;
+    height:10%;
+    float: left;
+    position: absolute;
+    left: 10px;
+}
+.imageName{
+    display: flex;
+    flex-direction: row;
+}
+.name{
+    float: left;
+}
+
+.astronomyImage{
+    width:10%;
+    height:10%;
+    float: right;
+    position: absolute;
+    right: 10px;
+}
+.Header{
+    display: flex;
+    flex-direction: column;
+}

@@ -1,0 +1,15 @@
+.spotLight {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .description {
+    width: 50%;
+  }
+  
+  .imagediv {
+width: 20%;
+  }
+.imagespotLight{
+  width: 20%;
+}
