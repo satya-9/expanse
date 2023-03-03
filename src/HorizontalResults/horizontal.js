@@ -19,7 +19,7 @@ function Horizontal() {
 
   const customStyles = {
     content: {
-      backgroundColor: "white"
+      backgroundColor: "white",
     },
   };
 
@@ -93,52 +93,55 @@ function Horizontal() {
             {item.media_type === "image" && (
               <img className="shimmer" src={item.url} />
             )}
-            {item.media_type === "video" && <iframe className="shimmer" src={item.url} />}
-            <p style={{marginLeft:"2%"}}>
-              {item.title} - 
-              <span style={{fontWeight:"bold"}}>{item.date}</span>
+            {item.media_type === "video" && (
+              <iframe className="shimmer" src={item.url} />
+            )}
+            <p style={{ marginLeft: "2%" }}>
+              {item.title} -
+              <span style={{ fontWeight: "bold" }}>{item.date}</span>
             </p>
           </div>
         ))}
-        <Modal
-          isOpen={modalOpen}
-          style={customStyles}
-          contentLabel="Example Modal"
-          ariaHideApp={false}
-        >
-          <div style={{}}>
-            <div style={{ position: "relative", right: "-1200px" }}>
-              <img
-                src="/iconButton.jpg"
-                style={{
-                  width: "3%",
-                  height: "3%",
-                  borderRadius: "30%",
-                  border: "2px solid #333",
-                }}
-                onClick={() => {
-                  setIsModalOpen(false);
-                }}
-              />
-            </div>
-            <div style={{}}>
-              <SpotLight results={itemDetails} />
-            </div>
-          </div>
-        </Modal>
-        {loading ? (
-          <div className="loader">
-            <ClipLoader
-              loading={loading}
-              size={50}
-              aria-label="Loading Spinner"
-              data-testid="loader"
+      </div>
+      <Modal
+        isOpen={modalOpen}
+        style={customStyles}
+        contentLabel="Example Modal"
+        ariaHideApp={false}
+      >
+        <div style={{}}>
+          <div style={{ position: "relative", right: "-1200px" }}>
+            <img
+              src="/iconButton.jpg"
+              style={{
+                width: "3%",
+                height: "3%",
+                borderRadius: "30%",
+                border: "2px solid #333",
+              }}
+              onClick={() => {
+                setIsModalOpen(false);
+              }}
             />
           </div>
-        ) : (
-          <></>
-        )}
-      </div>
+          <div style={{}}>
+            <SpotLight results={itemDetails} />
+          </div>
+        </div>
+      </Modal>
+      {loading ? (
+        <div className="loader">
+          <ClipLoader
+            loading={loading}
+            size={50}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+          <p>Loading .....</p>
+        </div>
+      ) : (
+        <></>
+      )}
     </>
   );
 }
