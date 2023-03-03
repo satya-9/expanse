@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { ShimmerThumbnail } from "react-shimmer-effects";
 import "./horizontal.css";
 import ClipLoader from "react-spinners/ClipLoader";
+import Modal from "react-modal";
+import SpotLight from "../SpotLight/spotLight";
 
 function Horizontal() {
   const [items, setItems] = useState([]);
@@ -9,6 +11,22 @@ function Horizontal() {
   const [endDate, setEndDate] = useState(today);
   const [loading, setLoading] = useState(false);
   const [modalOpen, setIsModalOpen] = useState(false);
+  const [itemDetails,setItemDetails]=useState({})
+
+  function closeModal() {
+    setIsModalOpen(false);
+  }
+
+  const customStyles = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+    },
+  };
 
   useEffect(() => {
     // Fetch data when the component mounts
@@ -59,36 +77,49 @@ function Horizontal() {
   }, []);
 
   return (
-    <div className="item-grid">
-      {items.map((item) => (
-        <div key={item.id} className="item">
-          {item.media_type === "image" && (
-            <img
-              className="shimmer"
-              src={item.url}
-              fa
+    <>
+      <div className="item-grid">
+        {console.log(items)}
+        {items.map((item) => (
+          <div key={item.id} className="item">
+            {item.media_type === "image" && (
+              <img
+                className="shimmer"
+                src={item.url}
+                onClick={() => {
+                  setIsModalOpen(true)
+                setItemDetails(item)}}
+              />
+            )}
+            {item.media_type === "video" && <img src={item.url} />}
+            <Modal
+              isOpen={modalOpen}
+              onRequestClose={closeModal}
+              style={customStyles}
+              contentLabel="Example Modal"
+              onr
+            >
+              <SpotLight results={item} />
+            </Modal>
+            <p>
+              {item.title} - {item.date}
+            </p>
+          </div>
+        ))}
+        {loading ? (
+          <div className="loader">
+            <ClipLoader
+              loading={loading}
+              size={150}
+              aria-label="Loading Spinner"
+              data-testid="loader"
             />
-          )}
-          {item.media_type === "video" && (
-            <img
-              src={item.url}
-            //   fallback={<Shimmer width={400} height={600} />}
-            />
-          )}
-          <p>{item.title}</p>
-        </div>
-      ))}
-      {loading && (
-        <div className="loader">
-          <ClipLoader
-            loading={loading}
-            size={150}
-            aria-label="Loading Spinner"
-            data-testid="loader"
-          />
-        </div>
-      )}
-    </div>
+          </div>
+        ) : (
+          <></>
+        )}
+      </div>
+    </>
   );
 }
 

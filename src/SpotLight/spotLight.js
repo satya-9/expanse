@@ -6,8 +6,8 @@ function SpotLight(props) {
     <div className="spotLight">
       <div className="description">
         <p className="spotLightText">{results.title}</p>
-        <p>{results.explanation.split(".")[0]}</p>
-        <p>{results.copyright}</p>
+        <p className="spotLightText">{results.explanation.split(".")[0]}</p>
+        <p className="spotLightText">{results.copyright}</p>
       </div>
       <div className="imagediv">
         <img className="imagespotLight" src={results.url} alt="lop" />
