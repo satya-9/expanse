@@ -8,7 +8,8 @@ import SpotLight from "../SpotLight/spotLight";
 function Horizontal() {
   const [items, setItems] = useState([]);
   const today = new Date();
-  const [endDate, setEndDate] = useState(today);
+  const yesterday= new Date(today.getTime() - 1 * 24 * 60 * 60 * 1000)
+  const [endDate, setEndDate] = useState(yesterday);
   const [loading, setLoading] = useState(false);
   const [modalOpen, setIsModalOpen] = useState(false);
   const [itemDetails, setItemDetails] = useState({});
