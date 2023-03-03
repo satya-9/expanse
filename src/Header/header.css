@@ -14,10 +14,9 @@ margin-left: 5%;
 height: 50%;
 }
 
-.nameDiv{
-    display: flex;
-    justify-content: center;
-    align-items: center; 
+.name{
+margin-left: 18%;
+font-weight: bold;
 }
 
 .imageAndName{
@@ -42,5 +41,5 @@ height: 50%;
 .astronomyImageDiv{
     margin-top: 2%;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
 }

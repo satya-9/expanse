@@ -11,7 +11,7 @@ function Horizontal() {
   const [endDate, setEndDate] = useState(today);
   const [loading, setLoading] = useState(false);
   const [modalOpen, setIsModalOpen] = useState(false);
-  const [itemDetails,setItemDetails]=useState({})
+  const [itemDetails, setItemDetails] = useState({});
 
   function closeModal() {
     setIsModalOpen(false);
@@ -19,12 +19,7 @@ function Horizontal() {
 
   const customStyles = {
     content: {
-      top: "50%",
-      left: "50%",
-      right: "auto",
-      bottom: "auto",
-      marginRight: "-50%",
-      transform: "translate(-50%, -50%)",
+      backgroundColor: "white"
     },
   };
 
@@ -35,7 +30,10 @@ function Horizontal() {
 
   useEffect(() => {
     // Fetch more data when the page changes
-    fetchData();
+    if (new Date() - endDate > 0) {
+      // Check if endDate has changed
+      fetchData();
+    }
   }, [endDate]);
 
   function fetchData() {
@@ -53,7 +51,11 @@ function Horizontal() {
     )
       .then((response) => response.json())
       .then((newItems) => {
-        setItems((prevItems) => [...prevItems, ...newItems]);
+        if (endDate === today) {
+          setItems(newItems.reverse());
+        } else {
+          setItems((prevItems) => [...prevItems, ...newItems.reverse()]);
+        }
         setLoading(false);
       });
   }
@@ -79,38 +81,56 @@ function Horizontal() {
   return (
     <>
       <div className="item-grid">
-        {console.log(items)}
         {items.map((item) => (
-          <div key={item.id} className="item">
+          <div
+            key={item.id}
+            className="item"
+            onClick={() => {
+              setIsModalOpen(true);
+              setItemDetails(item);
+            }}
+          >
             {item.media_type === "image" && (
-              <img
-                className="shimmer"
-                src={item.url}
-                onClick={() => {
-                  setIsModalOpen(true)
-                setItemDetails(item)}}
-              />
+              <img className="shimmer" src={item.url} />
             )}
-            {item.media_type === "video" && <img src={item.url} />}
-            <Modal
-              isOpen={modalOpen}
-              onRequestClose={closeModal}
-              style={customStyles}
-              contentLabel="Example Modal"
-              onr
-            >
-              <SpotLight results={item} />
-            </Modal>
-            <p>
-              {item.title} - {item.date}
+            {item.media_type === "video" && <iframe className="shimmer" src={item.url} />}
+            <p style={{marginLeft:"2%"}}>
+              {item.title} - 
+              <span style={{fontWeight:"bold"}}>{item.date}</span>
             </p>
           </div>
         ))}
+        <Modal
+          isOpen={modalOpen}
+          style={customStyles}
+          contentLabel="Example Modal"
+          ariaHideApp={false}
+        >
+          <div style={{}}>
+            <div style={{ position: "relative", right: "-1200px" }}>
+              <img
+                src="/iconButton.jpg"
+                style={{
+                  width: "3%",
+                  height: "3%",
+                  borderRadius: "30%",
+                  border: "2px solid #333",
+                }}
+                onClick={() => {
+                  setIsModalOpen(false);
+                }}
+              />
+            </div>
+            <div style={{}}>
+              <SpotLight results={itemDetails} />
+            </div>
+          </div>
+        </Modal>
         {loading ? (
           <div className="loader">
             <ClipLoader
               loading={loading}
-              size={150}
+              size={50}
               aria-label="Loading Spinner"
               data-testid="loader"
             />
