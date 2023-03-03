@@ -1,0 +1,4 @@
+Libraries Used: 
+1.react-spinners- For Loaders
+2.React
+3.React DOM

@@ -18,4 +18,5 @@
 .shimmer {
   height: 200px;
   width: 400px;
+  background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.5) 50%, transparent 100%);
 }
