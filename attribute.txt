@@ -2,5 +2,9 @@ Space Blog - An App for seeing the images of space from NASA
 
 Libraries Used: 
 1.react-spinners- For Loaders 
+2.React InfiniteScroll Component used for scrolling infinite fetchMoreData
+    a.If we click on any image of the feed it will pop up mui modal component
+    b.If we click on any video of the feed it will run the video. If we click on text in video it will popup in the next tab.
+3.Used Material mui modal component for modal pop up
 
 
