@@ -17,6 +17,7 @@ function App() {
           `https://api.nasa.gov/planetary/apod?api_key=gaff4Pwpu0Qg6woyFty1YhVRxhj4In1ImvOCyFD7&start_date=${spotLightDay}&end_date=${spotLightDay}&thumbs=true`
         );
         const resultsJson = await results.json();
+        
         setData(resultsJson);
         setLoading(false);
       } catch (error) {
@@ -45,9 +46,9 @@ function App() {
       {data.length > 0 && (
         <>
           <SpotLight results={data[0]} />
-          <Horizontal />
         </>
       )}
+      <Horizontal />
     </div>
   );
 }

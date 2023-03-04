@@ -1,45 +1,33 @@
-.nasaImage{
-    width:40%;
-    height:50%;
-    border-radius: 50%;
-    border: 2px solid #333; 
-}
-.spotLightText{
-    font-family: Arial, sans-serif;
+.nasaImage {
+  flex: 1;
+  width: 200px;
+  border-radius: 50%;
+  border: 2px solid #333;
 }
 
-.nasaImageDiv{
-margin-top: 2%;
-margin-left: 5%;
-height: 50%;
+.spotLightText {
+  font-family: Arial, sans-serif;
 }
 
-.name{
-margin-left: 18%;
-font-weight: bold;
+.astronomyImage {
+  width: 40%;
+  height: 10%;
+  border-radius: 20px;
+  border: 2px solid #333;
 }
 
-.imageAndName{
-    display: flex;
-    flex-direction: column;
+.Header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 10%;
 }
 
-.astronomyImage{
-    width:50%;
-    height:50%;
-    float: right;
-    border-radius: 5px; /* sets the border radius to 10 pixels */
-    border: 2px solid #333; /* sets the border to 2 pixels wide and #333 color */
-  
-}
-
-.Header{
-    display: flex;
-    flex-direction: row;
-}
-
-.astronomyImageDiv{
-    margin-top: 2%;
-    display: flex;
-    flex-direction: column;
+.astronomyImageDiv {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

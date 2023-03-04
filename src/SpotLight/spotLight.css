@@ -1,36 +1,55 @@
 .spotLight {
   display: flex;
   flex-direction: row;
-  align-content: space-between;
+  justify-content: space-evenly;
   margin: 1%;
-  border-radius: 2%;
-  border: "2px solid #333";
-  background-color: bisque;
   padding-top: 2%;
   padding-bottom: 2%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 5px;
 }
 
 .description {
-  width: 50%;
   display: flex;
   flex-direction: column;
   gap: "10px";
 }
 
 .imagediv {
-  left: "50%";
-  margin-left: 20%;
-  float: "right";
+  display: flex;
+  justify-content: center;
+
 }
 
 .imagespotLight {
-  margin-right: 10px;
-  height: 200px;
+  margin-right: 10px ;
   border-radius: 10%;
   border: 2px solid #333;
 }
+
 .spotLightText {
   text-align: center;
-  font-weight: bold;
-  margin-top: "10px";
+
+}
+
+.shimmerImage {
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.5) 50%, transparent 100%);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
+  margin: 10px;
+  animation: shimmer 1s linear infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }

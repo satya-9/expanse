@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./spotLight.css";
 import Modal from "react-modal";
+import AlertDialogSlide from "../modalComponent/modalComponent";
 
 function SpotLight(props) {
   const [item, setItem] = useState(props.results);
@@ -10,13 +11,13 @@ function SpotLight(props) {
     setItem(props.results);
   }, []);
 
-  const spotLigtComponent = () => {
+  const spotLightComponent = () => {
     return (
       <div className="spotLight">
         <div className="description">
-          <p className="spotLightText">{item.title}</p>
-          <p className="spotLightText">{item.explanation.split(".")[0]}</p>
-          <p className="spotLightText">{item.copyright}</p>
+          <p className="spotLightText" style={{fontWeight:"bold"}}>{item?.title}</p>
+          <p className="spotLightText" style={{marginLeft:"20px"}}>{item?.explanation.split(".")[0]+item?.explanation?.split(".")[1]}</p>
+          <p className="spotLightText">{item?.copyright}</p>
         </div>
         <div
           className="imagediv"
@@ -25,10 +26,10 @@ function SpotLight(props) {
           }}
         >
           {item.media_type === "image" && (
-            <img className="shimmer" src={item.url} />
+            <img className="shimmerImage" src={item.url} />
           )}
           {item.media_type === "video" && (
-            <iframe className="shimmer" src={item.url} title={item.title}/>
+            <iframe className="shimmerImage" src={item.url} title={item.title}/>
           )}
         </div>
       </div>
@@ -37,30 +38,8 @@ function SpotLight(props) {
 
   return (
     <>
-      {spotLigtComponent()}
-      <Modal
-        isOpen={modalOpen}
-        contentLabel="Example Modal"
-        ariaHideApp={false}
-      >
-        <div style={{}}>
-          <div style={{ position: "relative", right: "-1200px" }}>
-            <img
-              src="/iconButton.jpg"
-              style={{
-                width: "3%",
-                height: "3%",
-                borderRadius: "30%",
-                border: "2px solid #333",
-              }}
-              onClick={() => {
-                setIsModalOpen(false);
-              }}
-            />
-          </div>
-          <div style={{}}>{spotLigtComponent()}</div>
-        </div>
-      </Modal>
+      {spotLightComponent()}
+      <AlertDialogSlide results={item} open={modalOpen} onClose={()=>{setIsModalOpen(false)}} />
     </>
   );
 }

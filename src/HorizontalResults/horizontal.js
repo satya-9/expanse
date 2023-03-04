@@ -1,28 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { ShimmerThumbnail } from "react-shimmer-effects";
+import React, { useState, useEffect, useRef } from "react";
 import "./horizontal.css";
 import ClipLoader from "react-spinners/ClipLoader";
-import Modal from "react-modal";
-import SpotLight from "../SpotLight/spotLight";
+import AlertDialogSlide from "../modalComponent/modalComponent";
 
 function Horizontal() {
   const [items, setItems] = useState([]);
   const today = new Date();
-  const yesterday= new Date(today.getTime() - 1 * 24 * 60 * 60 * 1000)
+  const yesterday = new Date(today.getTime() - 1 * 24 * 60 * 60 * 1000);
   const [endDate, setEndDate] = useState(yesterday);
   const [loading, setLoading] = useState(false);
   const [modalOpen, setIsModalOpen] = useState(false);
   const [itemDetails, setItemDetails] = useState({});
-
-  function closeModal() {
-    setIsModalOpen(false);
-  }
-
-  const customStyles = {
-    content: {
-      backgroundColor: "white",
-    },
-  };
+  const firstRender = useRef(true);
 
   useEffect(() => {
     // Fetch data when the component mounts
@@ -31,20 +20,23 @@ function Horizontal() {
 
   useEffect(() => {
     // Fetch more data when the page changes
-    if (new Date() - endDate > 0) {
-      // Check if endDate has changed
+    if (firstRender.current) {
+      firstRender.current = false;
+    } else {
+      console.log("been")
       fetchData();
     }
   }, [endDate]);
 
   function fetchData() {
     // Fetch data from the server
-    const tenDaysAgoFromEnd = new Date(
+    const fourteenDaysAgoFromEnd = new Date(
       endDate.getTime() - 14 * 24 * 60 * 60 * 1000
     );
+    console.log("enddate")
     setLoading(true);
     fetch(
-      `https://api.nasa.gov/planetary/apod?api_key=gaff4Pwpu0Qg6woyFty1YhVRxhj4In1ImvOCyFD7&start_date=${tenDaysAgoFromEnd
+      `https://api.nasa.gov/planetary/apod?api_key=e1hXx9yEnK0saSB8OWYEgIlTyzxHIh4JMIsovlDW&start_date=${fourteenDaysAgoFromEnd
         .toISOString()
         .substring(0, 10)}&end_date=${endDate
         .toISOString()
@@ -52,24 +44,33 @@ function Horizontal() {
     )
       .then((response) => response.json())
       .then((newItems) => {
-        if (endDate === today) {
-          setItems(newItems.reverse());
-        } else {
-          setItems((prevItems) => [...prevItems, ...newItems.reverse()]);
-        }
+
+        setItems((prevItems) => [...prevItems, ...newItems.reverse()]);
         setLoading(false);
       });
   }
 
   function handleScroll() {
-    const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+    const scrollTop = document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight;
+    const clientHeight = document.documentElement.clientHeight;
 
-    if (scrollTop + clientHeight >= scrollHeight - 5) {
+    if (scrollTop + clientHeight >= scrollHeight) {
+      console.log("scroll down")
       setEndDate((prev) => {
-        return new Date(prev.getTime() - 14 * 24 * 60 * 60 * 1000);
+        return new Date(prev.getTime() - 15 * 24 * 60 * 60 * 1000);
       });
+
     }
   }
+
+
+  const uniqueArray = (obj) => (obj.filter((value, index) => {
+    const _value = JSON.stringify(value);
+    return index === obj.findIndex(obj => {
+      return JSON.stringify(obj) === _value;
+    });
+  }))
 
   useEffect(() => {
     // Add scroll event listener when the component mounts
@@ -82,13 +83,18 @@ function Horizontal() {
   return (
     <>
       <div className="item-grid">
-        {items.map((item) => (
+        {uniqueArray(items).sort((a,b)=>{return new Date(a.date)-new Date(b.date)}).reverse().map((item) => (
           <div
             key={item.id}
             className="item"
             onClick={() => {
-              setIsModalOpen(true);
-              setItemDetails(item);
+              if (item.media_type === "image") {
+                setIsModalOpen(true);
+                setItemDetails(item);
+              }
+              if (item.media_type === "video") {
+                window.open(item.url, "_blank");
+              }
             }}
           >
             {item.media_type === "image" && (
@@ -104,32 +110,13 @@ function Horizontal() {
           </div>
         ))}
       </div>
-      <Modal
-        isOpen={modalOpen}
-        style={customStyles}
-        contentLabel="Example Modal"
-        ariaHideApp={false}
-      >
-        <div style={{}}>
-          <div style={{ position: "relative", right: "-1200px" }}>
-            <img
-              src="/iconButton.jpg"
-              style={{
-                width: "3%",
-                height: "3%",
-                borderRadius: "30%",
-                border: "2px solid #333",
-              }}
-              onClick={() => {
-                setIsModalOpen(false);
-              }}
-            />
-          </div>
-          <div style={{}}>
-            <SpotLight results={itemDetails} />
-          </div>
-        </div>
-      </Modal>
+      <AlertDialogSlide
+        results={itemDetails}
+        open={modalOpen}
+        onClose={() => {
+          setIsModalOpen(false);
+        }}
+      />
       {loading ? (
         <div className="loader">
           <ClipLoader
