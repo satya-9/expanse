@@ -1,4 +1,4 @@
-import react, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import Header from "./Header/header";
 import Horizontal from "./HorizontalResults/horizontal";
@@ -17,7 +17,7 @@ function App() {
           `https://api.nasa.gov/planetary/apod?api_key=gaff4Pwpu0Qg6woyFty1YhVRxhj4In1ImvOCyFD7&start_date=${spotLightDay}&end_date=${spotLightDay}&thumbs=true`
         );
         const resultsJson = await results.json();
-        
+
         setData(resultsJson);
         setLoading(false);
       } catch (error) {

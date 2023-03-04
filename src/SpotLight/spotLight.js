@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import "./spotLight.css";
-import Modal from "react-modal";
 import AlertDialogSlide from "../modalComponent/modalComponent";
 
 function SpotLight(props) {
@@ -9,7 +8,7 @@ function SpotLight(props) {
 
   useEffect(() => {
     setItem(props.results);
-  }, []);
+  }, [props.results]);
 
   const spotLightComponent = () => {
     return (
